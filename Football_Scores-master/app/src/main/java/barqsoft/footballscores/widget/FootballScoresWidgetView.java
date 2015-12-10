@@ -11,14 +11,15 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import java.util.ArrayList;
+
 import barqsoft.footballscores.R;
 
 public class FootballScoresWidgetView implements RemoteViewsService.RemoteViewsFactory {
 
-    //ArrayList<> arrayList = new ArrayList<>();
+    ArrayList<String> arrayList = new ArrayList<>();
 
     private int appWidgetId;
-    private float fontSize;
     private Context mContext;
 
     public FootballScoresWidgetView(Context context, Intent intent) {
@@ -34,6 +35,11 @@ public class FootballScoresWidgetView implements RemoteViewsService.RemoteViewsF
 
         // populate arraylist here...
 
+        arrayList.add("Paris FC");
+        arrayList.add("Getafe CF");
+        arrayList.add("Ajaccio AC");
+        arrayList.add("AJ Auxerre");
+
 
 
 
@@ -47,8 +53,7 @@ public class FootballScoresWidgetView implements RemoteViewsService.RemoteViewsF
 
     @Override
     public int getCount() {
-        //return(arrayList.size()); // TODO: setup arraylist
-        return 1;
+        return(arrayList.size());
     }
 
     @Override
@@ -62,6 +67,8 @@ public class FootballScoresWidgetView implements RemoteViewsService.RemoteViewsF
 
         */
 
+        row.setTextViewText(android.R.id.text1, arrayList.get(position));
+
         Bundle extras = new Bundle();
         extras.putInt(FootballScoresWidget.EXTRA_ITEM, position);
         Intent fillInIntent = new Intent();
@@ -69,6 +76,8 @@ public class FootballScoresWidgetView implements RemoteViewsService.RemoteViewsF
 
         // Make it possible to distinguish the individual on-click
         // action of a given item
+
+        row.setOnClickFillInIntent(android.R.id.text1, fillInIntent);
 
         return(row);
     }

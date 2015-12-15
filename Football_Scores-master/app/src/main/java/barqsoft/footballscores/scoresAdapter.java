@@ -4,14 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import barqsoft.footballscores.service.myFetchService;
 
 /**
  * Created by yehya khaled on 2/26/2015.
@@ -59,9 +56,9 @@ public class scoresAdapter extends CursorAdapter
                 cursor.getString(COL_AWAY)
         ));
 
-        Log.v(myFetchService.LOG_TAG, mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() + " id " + String.valueOf(mHolder.match_id));
+        //Log.v(myFetchService.LOG_TAG, mHolder.home_name.getText() + " Vs. " + mHolder.away_name.getText() + " id " + String.valueOf(mHolder.match_id));
 
-        System.out.println("mHolder.date = " + mHolder.date.getText());
+        //System.out.println("mHolder.date = " + mHolder.date.getText());
 
         //Log.v(myFetchService.LOG_TAG,String.valueOf(detail_match_id));
 

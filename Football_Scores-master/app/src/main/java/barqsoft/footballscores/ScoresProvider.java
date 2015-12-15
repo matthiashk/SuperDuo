@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Created by yehya khaled on 2/25/2015.
@@ -41,6 +42,8 @@ public class ScoresProvider extends ContentProvider
     private int match_uri(Uri uri)
     {
         String link = uri.toString();
+
+        //System.out.println("link = " + link);
         {
            if(link.contentEquals(DatabaseContract.BASE_CONTENT_URI.toString()))
            {
@@ -78,6 +81,8 @@ public class ScoresProvider extends ContentProvider
     public String getType(Uri uri)
     {
         final int match = muriMatcher.match(uri);
+
+        System.out.println("ScoresProvider - match = " + match);
         switch (match) {
             case MATCHES:
                 return DatabaseContract.scores_table.CONTENT_TYPE;
@@ -86,6 +91,7 @@ public class ScoresProvider extends ContentProvider
             case MATCHES_WITH_ID:
                 return DatabaseContract.scores_table.CONTENT_ITEM_TYPE;
             case MATCHES_WITH_DATE:
+                System.out.println("MATCHES_WITH_DATE");
                 return DatabaseContract.scores_table.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri :" + uri );
@@ -95,12 +101,15 @@ public class ScoresProvider extends ContentProvider
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
     {
+
+        //System.out.println("ScoresProvider - Cursor query ****");
         Cursor retCursor;
         //Log.v(FetchScoreTask.LOG_TAG,uri.getPathSegments().toString());
         int match = match_uri(uri);
         //Log.v(FetchScoreTask.LOG_TAG,SCORES_BY_LEAGUE);
         //Log.v(FetchScoreTask.LOG_TAG,selectionArgs[0]);
-        //Log.v(FetchScoreTask.LOG_TAG,String.valueOf(match));
+        Log.v("ScoresProvider match", String.valueOf(match));
+        //System.out.println("ScoresProvider selectionArgs[0] = " + selectionArgs[0]);
         switch (match)
         {
             case MATCHES: retCursor = mOpenHelper.getReadableDatabase().query(

@@ -51,7 +51,7 @@ public class FootballScoresWidget extends AppWidgetProvider {
 
         for (int mAppWidgetId : appWidgetIds) {
 
-            Intent intent = new Intent(context, FootballScoresWidgetService.class);
+            Intent intent = new Intent(context, FootballScoresWidgetView.class);
 
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -154,7 +155,16 @@ public class FootballScoresWidgetView extends RemoteViewsService {
                 String awayTeam = data.getString(FOOTBALL_AWAY_COL);
                 String gameTime = data.getString(FOOTBALL_TIME);
 
-                System.out.println("homeTeam = " + homeTeam);
+                //System.out.println("homeTeam = " + homeTeam);
+
+                Bundle extras = new Bundle();
+                extras.putInt(FootballScoresWidget.EXTRA_ITEM, position);
+                Intent fillInIntent = new Intent();
+                fillInIntent.putExtras(extras);
+
+                views.setOnClickFillInIntent(R.id.text1, fillInIntent);
+                views.setOnClickFillInIntent(R.id.text2, fillInIntent);
+                views.setOnClickFillInIntent(R.id.text3, fillInIntent);
 
                 /*
                 views.setTextViewText(R.id.widget_date, formattedDate);

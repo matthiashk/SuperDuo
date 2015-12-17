@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Created by yehya khaled on 2/25/2015.
@@ -82,7 +81,7 @@ public class ScoresProvider extends ContentProvider
     {
         final int match = muriMatcher.match(uri);
 
-        System.out.println("ScoresProvider - match = " + match);
+        //System.out.println("ScoresProvider - match = " + match);
         switch (match) {
             case MATCHES:
                 return DatabaseContract.scores_table.CONTENT_TYPE;
@@ -108,7 +107,7 @@ public class ScoresProvider extends ContentProvider
         int match = match_uri(uri);
         //Log.v(FetchScoreTask.LOG_TAG,SCORES_BY_LEAGUE);
         //Log.v(FetchScoreTask.LOG_TAG,selectionArgs[0]);
-        Log.v("ScoresProvider match", String.valueOf(match));
+        //Log.v("ScoresProvider match", String.valueOf(match));
         //System.out.println("ScoresProvider selectionArgs[0] = " + selectionArgs[0]);
         switch (match)
         {

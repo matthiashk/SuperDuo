@@ -27,6 +27,8 @@ public class FootballScoresWidget extends AppWidgetProvider {
 
         // update ids in extras here?
 
+        //System.out.println("FootballScoresWidget - onReceive");
+
         // launch app if a row on the widget was clicked
         if (intent.getAction().equals(CLICK_ACTION)) {
 

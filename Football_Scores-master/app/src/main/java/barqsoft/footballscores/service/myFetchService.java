@@ -123,7 +123,7 @@ public class myFetchService extends IntentService
                 processJSONdata(JSON_data, getApplicationContext(), true);
             } else {
                 //Could not Connect
-                Log.d(LOG_TAG, "Could not connect to server.");
+                //Log.d(LOG_TAG, "Could not connect to server.");
             }
         }
         catch(Exception e)

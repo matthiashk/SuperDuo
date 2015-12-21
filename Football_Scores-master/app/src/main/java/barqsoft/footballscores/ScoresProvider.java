@@ -128,7 +128,9 @@ public class ScoresProvider extends ContentProvider
                     projection,SCORES_BY_LEAGUE,selectionArgs,null,null,sortOrder); break;
             default: throw new UnsupportedOperationException("Unknown Uri" + uri);
         }
+
         retCursor.setNotificationUri(getContext().getContentResolver(),uri);
+
         return retCursor;
     }
 

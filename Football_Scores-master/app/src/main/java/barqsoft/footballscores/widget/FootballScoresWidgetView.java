@@ -48,7 +48,7 @@ public class FootballScoresWidgetView extends RemoteViewsService {
             @Override
             public void onCreate() {
 
-                System.out.println("FootballScoresWidgetView - onCreate *****");
+                //System.out.println("FootballScoresWidgetView - onCreate *****");
                 // Nothing to do
             }
 
@@ -57,26 +57,17 @@ public class FootballScoresWidgetView extends RemoteViewsService {
                 if (data != null) {
                     data.close();
                 }
-                // This method is called by the app hosting the widget (e.g., the launcher)
-                // However, our ContentProvider is not exported so it doesn't have access to the
-                // data. Therefore we need to clear (and finally restore) the calling identity so
-                // that calls use our process and permission
 
-                String matchDay = "15";
+                /* get data from the database based on the date */
 
                 final long identityToken = Binder.clearCallingIdentity();
-                //String location = Utility.getPreferredLocation(DetailWidgetRemoteViewsService.this);
                 Uri footballScoresForDateUri = DatabaseContract.scores_table.buildScoreWithDate();
-
-                //String QUERY = "SELECT * FROM "+DatabaseContract.SCORES_TABLE;
 
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Date todayDate = new Date();
                 String matchDate = df.format(todayDate);
 
-
-
-                System.out.println("footballScoresForDateUri.toString() = " + footballScoresForDateUri.toString());
+                //System.out.println("footballScoresForDateUri.toString() = " + footballScoresForDateUri.toString());
 
                 data = getContentResolver().query(footballScoresForDateUri,
                         FOOTBALL_COLUMNS,
@@ -85,10 +76,9 @@ public class FootballScoresWidgetView extends RemoteViewsService {
                         DatabaseContract.scores_table.HOME_GOALS_COL + " ASC");
                 Binder.restoreCallingIdentity(identityToken);
 
-                System.out.println("data.getCount() = " + data.getCount());
+                //System.out.println("data.getCount() = " + data.getCount());
 
                 //System.out.println("data = " + data); // not null, means query is incorrect...
-
             }
 
             @Override
@@ -112,44 +102,6 @@ public class FootballScoresWidgetView extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(),
                         R.layout.widget_row);
-                /*
-                int weatherId = data.getInt(INDEX_WEATHER_CONDITION_ID);
-                int weatherArtResourceId = Utility.getIconResourceForWeatherCondition(weatherId);
-                Bitmap weatherArtImage = null;
-                if ( !Utility.usingLocalGraphics(DetailWidgetRemoteViewsService.this) ) {
-                    String weatherArtResourceUrl = Utility.getArtUrlForWeatherCondition(
-                            DetailWidgetRemoteViewsService.this, weatherId);
-                    try {
-                        weatherArtImage = Glide.with(DetailWidgetRemoteViewsService.this)
-                                .load(weatherArtResourceUrl)
-                                .asBitmap()
-                                .error(weatherArtResourceId)
-                                .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).get();
-                    } catch (InterruptedException | ExecutionException e) {
-                        Log.e(LOG_TAG, "Error retrieving large icon from " + weatherArtResourceUrl, e);
-                    }
-                }*/
-
-                /*
-                String description = data.getString(INDEX_WEATHER_DESC);
-                long dateInMillis = data.getLong(INDEX_WEATHER_DATE);
-                String formattedDate = Utility.getFriendlyDayString(
-                        DetailWidgetRemoteViewsService.this, dateInMillis, false);
-                double maxTemp = data.getDouble(INDEX_WEATHER_MAX_TEMP);
-                double minTemp = data.getDouble(INDEX_WEATHER_MIN_TEMP);
-                String formattedMaxTemperature =
-                        Utility.formatTemperature(DetailWidgetRemoteViewsService.this, maxTemp);
-                String formattedMinTemperature =
-                        Utility.formatTemperature(DetailWidgetRemoteViewsService.this, minTemp);
-                if (weatherArtImage != null) {
-                    views.setImageViewBitmap(R.id.widget_icon, weatherArtImage);
-                } else {
-                    views.setImageViewResource(R.id.widget_icon, weatherArtResourceId);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    setRemoteContentDescription(views, description);
-                }
-                */
 
                 String homeTeam = data.getString(FOOTBALL_HOME_COL);
                 String awayTeam = data.getString(FOOTBALL_AWAY_COL);
@@ -162,30 +114,14 @@ public class FootballScoresWidgetView extends RemoteViewsService {
                 Intent fillInIntent = new Intent();
                 fillInIntent.putExtras(extras);
 
-                views.setOnClickFillInIntent(R.id.text1, fillInIntent);
-                views.setOnClickFillInIntent(R.id.text2, fillInIntent);
-                views.setOnClickFillInIntent(R.id.text3, fillInIntent);
+                // make widget launch app when the textviews are clicked
+                views.setOnClickFillInIntent(R.id.home_textview, fillInIntent);
+                views.setOnClickFillInIntent(R.id.time_textview, fillInIntent);
+                views.setOnClickFillInIntent(R.id.away_textview, fillInIntent);
 
-                /*
-                views.setTextViewText(R.id.widget_date, formattedDate);
-                views.setTextViewText(R.id.widget_description, description);
-                views.setTextViewText(R.id.widget_high_temperature, formattedMaxTemperature);
-                views.setTextViewText(R.id.widget_low_temperature, formattedMinTemperature);
-
-                final Intent fillInIntent = new Intent();
-                String locationSetting =
-                        Utility.getPreferredLocation(DetailWidgetRemoteViewsService.this);
-                Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                        locationSetting,
-                        dateInMillis);
-                fillInIntent.setData(weatherUri);
-                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
-                */
-
-                views.setTextViewText(R.id.text1, homeTeam);
-                views.setTextViewText(R.id.text2, gameTime);
-                views.setTextViewText(R.id.text3, awayTeam);
-
+                views.setTextViewText(R.id.home_textview, homeTeam);
+                views.setTextViewText(R.id.time_textview, gameTime);
+                views.setTextViewText(R.id.away_textview, awayTeam);
 
                 return views;
             }

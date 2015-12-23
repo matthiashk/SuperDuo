@@ -181,6 +181,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         ((TextView) rootView.findViewById(R.id.bookSubTitle)).setText(bookSubTitle);
 
         String authors = data.getString(data.getColumnIndex(AlexandriaContract.AuthorEntry.AUTHOR));
+
+        // fix for the null author crash
+        if (authors == null) {
+
+            authors = "Unknown";
+        }
+
         String[] authorsArr = authors.split(",");
         ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
         ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",","\n"));
@@ -224,10 +231,14 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     }
 
     public void onActivityResult (int requestCode, int resultCode, Intent data) {
-        String value = data.getStringExtra("fromScanner");
 
-        ean.setText(value);
+        if (data != null) {
 
-        //System.out.println("value = " + value);
+            String value = data.getStringExtra("fromScanner");
+
+            ean.setText(value);
+
+            //System.out.println("value = " + value);
+        }
     }
 }

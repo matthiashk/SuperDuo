@@ -1,6 +1,6 @@
 # SuperDuo
 
-Football Scores app. Please add your api key in strings.xml "api_key".
+Football Scores app and Alexandria book barcode scanner app.
 
 Summary of changes:
 
@@ -16,3 +16,4 @@ Summary of changes:
     Added click intent so the user can click on the widget to launch app.
     Added content descriptions for match date and scores.
     
+Note: Please add your api key in strings.xml "api_key".
